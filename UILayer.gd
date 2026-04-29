@@ -792,12 +792,14 @@ func _process(delta):
 		var fx = game.effects
 		#	For normal game
 		for effect in fx:
-			effect.modulate.a = min(effect.modulate.a, float(opacity / 100))
+			if is_instance_valid(effect):
+				effect.modulate.a = min(effect.modulate.a, float(opacity / 100))
 		
 	if is_instance_valid(ghost_game):
 		var fx = ghost_game.effects
 		for effect in fx:
-			effect.modulate.a = min(effect.modulate.a, float(opacity / 100))
+			if is_instance_valid(effect):
+				effect.modulate.a = min(effect.modulate.a, float(opacity / 100))
 	
 	var p1_old_text = $"%P1TurnTimerLabel".text
 	$"%P1TurnTimerLabel".text = time_convert(int(floor(p1_turn_timer.time_left)))
