@@ -305,7 +305,7 @@ func copy_to(o:BaseObj):
 	o.sprite.scale = sprite.scale
 	o.sprite.flip_h = sprite.flip_h
 	o.sprite.flip_v = sprite.flip_v
-	o.rotation_degrees = o.rotation_degrees
+	o.sprite.rotation_degrees = sprite.rotation_degrees
 	o.sprite.rotation = sprite.rotation
 	o.set_facing(get_facing_int())
 	o.flip.scale = flip.scale
