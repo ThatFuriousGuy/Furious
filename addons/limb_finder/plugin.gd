@@ -1,4 +1,4 @@
-tool
+tool 
 extends EditorPlugin
 
 const MainPanel = preload("res://addons/limb_finder/LimbFinder.tscn")
@@ -14,12 +14,17 @@ func _enter_tree():
 	selection.connect("selection_changed", self, "_on_editor_selection_changed")
 
 func _on_editor_selection_changed():
-	var selected_nodes = selection.get_selected_nodes()
-	for node in selected_nodes:
-		if node is BaseObj:
-			main_panel_instance.load_node(node)
-			break
+#	var selected_nodes = selection.get_selected_nodes()
+#	for node in selected_nodes:
+#		if node is BaseObj:
+#			main_panel_instance.load_node(node)
+#			break
 
+	var first_node :Node= get_editor_interface().get_edited_scene_root()
+	if first_node is BaseObj:
+		main_panel_instance.load_node(first_node)
+#		main_panel_instance.canvas.refresh_scale()
+		
 func _exit_tree():
 	if main_panel_instance:
 		remove_control_from_bottom_panel(main_panel_instance)

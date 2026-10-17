@@ -21,7 +21,8 @@ func _ready():
 	# Repaint markers when the canvas is resized so they track the letterboxed,
 	# aspect-preserved texture instead of drifting off the sprite.
 	connect("resized", self, "update")
-
+	call_deferred("_update_pivot")
+	
 func clear():
 	active_pos = null
 	active_dir = null
@@ -41,15 +42,17 @@ func set_others(limbs):
 func _draw():
 	if !texture:
 		return
+	var zoom = _zoom()
+	
 	# Other limbs as faded markers.
 	for name in other_limbs:
 		var entry = other_limbs[name]
 		var p = _tex_to_screen(entry.pos)
-		draw_circle(p, 4, Color(0.2, 0.2, 0.2, 0.6))
-		draw_circle(p, 3, Color(0.6, 0.6, 1.0, 0.6))
+		draw_circle(p, 4/(zoom), Color(0.2, 0.2, 0.2, 0.6))
+		draw_circle(p, 3/(zoom), Color(0.6, 0.6, 1.0, 0.6))
 		if entry.has("dir") and entry.dir != Vector2():
 			var d = (entry.dir * _tex_scale()).normalized()
-			draw_line(p, p + d * 14, Color(0.6, 0.6, 1.0, 0.6), 1.5)
+			draw_line(p, p + d * 14, Color(0.6, 0.6, 1.0, 0.6), 1.5/(zoom*0.5))
 	# Active limb marker.
 	var draw_pos = null
 	var draw_dir = null
@@ -65,11 +68,17 @@ func _draw():
 			# non-uniform) scale so it lies correctly on the squashed sprite.
 			draw_dir = (active_dir * _tex_scale()).normalized()
 	if draw_pos != null:
-		draw_circle(draw_pos, 5, Color.black)
-		draw_circle(draw_pos, 4, Color.red)
+		draw_circle(draw_pos, 5/(zoom), Color.black)
+		draw_circle(draw_pos, 4/(zoom), Color.red)
 		if draw_dir != null:
-			draw_line(draw_pos, draw_pos + draw_dir * 22, Color.black, 2.0)
-			draw_line(draw_pos, draw_pos + draw_dir * 22, Color.yellow, 1.0)
+			draw_line(draw_pos, draw_pos + draw_dir * 22, Color.black, 2.0/(zoom*0.5))
+			draw_line(draw_pos, draw_pos + draw_dir * 22, Color.yellow, 1.0/(zoom*0.5))
+
+	var rect = scaled_rect()
+
+	var color = Color.white
+	color.a = 0.25
+	draw_rect(rect, color, false, 2.0)
 
 # The TextureRect uses stretch_mode KEEP_ASPECT_CENTERED: the texture keeps its
 # aspect ratio and is centered, giving a single uniform scale plus a letterbox
@@ -148,3 +157,36 @@ func _gui_input(event):
 			var scale = _tex_scale()
 			drag_current = drag_start + _snap_to_angle((drag_current - drag_start) / scale) * scale
 		update()
+
+func has_point(point: Vector2) -> bool:
+	if scaled_rect().has_point(point):
+		return true
+	return false
+
+func _zoom()->float:
+	return $"../../../../..".current_zoom
+
+func _pan()->Vector2:
+	return $"../../../../..".panning_offset / _zoom()
+	
+func scaled_rect():
+	if texture:
+		var zoom := _zoom()
+		var base_size := rect_size
+
+		var new_size := base_size / zoom
+		var new_pos := ((base_size - new_size) * 0.5) - _pan()
+
+		new_pos = new_pos.floor()
+		new_size = new_size.ceil()
+		
+		return Rect2(new_pos, new_size)
+
+	return Rect2()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED:
+		_update_pivot()
+
+func _update_pivot() -> void:
+	rect_pivot_offset = rect_size * 0.5
