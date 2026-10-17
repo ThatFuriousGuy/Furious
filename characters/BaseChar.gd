@@ -224,9 +224,13 @@ export var extra_color_1 = Color("ff00ff")
 export var use_extra_color_2 = false
 export var extra_color_2 = Color("ff00ff")
 
+export var _c_Character_Borders = 0
 export (Texture) var border_portrait
 export (Texture) var border_background
+# Modders can use these and the banner will recognize it
 
+#export (Texture) var border_portrait_loaded #If null, will use "border_portrait" instead
+#export (AudioStream) var portrait_load_sound #Plays once the character is loaded
 
 var global_damage_modifier = "1.0"
 var global_hitstun_modifier = "1.0"

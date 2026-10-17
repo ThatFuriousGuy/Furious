@@ -38,6 +38,7 @@ var loadedChars = [] # will hold the name of the characters that are already loa
 var buttonsToLoad = [] # will hold the same data as charList, but is used only to load buttons. this data gets set on addCustomChar()
 
 var charPortrait = {} # will hold the portrait textures to be shown on unloaded characters
+var charBorderPortrait = {} # will hold the banner art paths of unloaded characters
 var errorMessage = {} # will hold a list of missing files for any characters that don't load correctly
 var importWarnings = {} # chars that loaded but still have import issues (will show in the bottom warning regardless of load success)
 var charExColors = {} # will hold the dictionaries containing the extra colors of unloaded characters
@@ -136,8 +137,8 @@ func _ready():
 #	load_mods()
 
 	yield(self, "mods_loaded")
-
-	
+	$"%P1Display".connect("style_selected", self, "banner_apply_style", [1])
+	$"%P2Display".connect("style_selected", self, "banner_apply_style", [2])
 	loaded_mods = true
 	yield(get_tree(), "idle_frame")
 	net_updateModLists()
@@ -260,7 +261,8 @@ func init(singleplayer=true):
 		1: null,
 		2: null
 	}
-	
+	banner_clear(1)
+	banner_clear(2)
 	current_player = 1 if singleplayer else Network.player_id
 	
 	if !singleplayer:
@@ -329,6 +331,9 @@ func get_display_data(button):
 			return data
 		data["name"] = scene.name
 		data["portrait"] = scene.character_portrait
+		# portrait banner and sounds
+		for key in ["border_portrait", "border_portrait_loaded", "portrait_load_sound"]:
+			data[key] = scene.get(key)
 		if scene.has_method("get_limb_data"):
 			data["limb_data"] = scene.get_limb_data().duplicate(true)
 		if scene.use_extra_color_1:
@@ -388,6 +393,12 @@ func _on_button_pressed(button):
 		return
 	var miss = []
 	if (isCustomChar(button.name)):
+		# show the banner while the character loads
+		var data = get_display_data(button)
+		var path = charBorderPortrait.get(button.name, "")
+		if path != "" and not data.get("border_portrait"):
+			data["border_portrait"] = load(path) if ResourceLoader.exists(path) else textureGet(path)
+		banner_reveal(banner_side(), button.name, data)
 		loadThread = Thread.new()
 		loadThread.start(self, "async_loadButtonChar", button)
 	else:
@@ -720,6 +731,8 @@ func async_loadButtonChar(button):
 
 	if (miss == []):
 		buffer_select(button)
+	else:
+		call_deferred("banner_clear", banner_side())
 	loadingText = getCharName(button.name) + " Loaded"
 	loadingLabel_vanish()
 	currentlyLoading = false
@@ -751,6 +764,8 @@ func buffer_select(button):
 	var data = get_character_data(button)
 	var display_data = get_display_data(button)
 	display_character(current_player, display_data)
+	# In multiplayer the banner will show on the empty side
+	call_deferred("banner_show", banner_side(), button.name, display_data)
 	selected_characters[current_player] = data
 	
 	if singleplayer and current_player == 1:
@@ -1186,7 +1201,16 @@ func _importHolderPortrait(folder, scenePath, charName):
 		var ex2Source = content.substr(startNumInd, content.find(" )", ex2SourceInd) - startNumInd)
 		var split = ex2Source.split(', ')
 		ex2Color = Color(split[0].strip_edges(), split[1].strip_edges(), split[2].strip_edges(), split[3].strip_edges())
-
+	
+	# loading the banner when character selected
+	var borderSourceInd = content.find("\nborder_portrait = ExtResource")
+	if (borderSourceInd != -1):
+		var startNumInd = borderSourceInd + 32
+		var borderSource = content.substr(startNumInd, content.find(" )", borderSourceInd) - startNumInd)
+		var idInd = content.find(" id=" + borderSource + "]")
+		var pathInd = content.rfind("path=\"", idInd) + 6
+		charBorderPortrait[charName] = content.substr(pathInd, content.find("\"", pathInd) - pathInd)
+	
 	f.close()
 	charPortrait[charName] = textureGet(portPath)
 	charExColors[charName] = {}
@@ -1352,3 +1376,70 @@ func _createImportFiles(folder, _charName, _charPath): # returns an array of mis
 		_import_copy("user://char_cache/" + modName.validate_node_name() + "-" + md.author.validate_node_name() + "-" + folder_to_hash(folder) + "-" + clVersion.validate_node_name() + ".pck") # will cache the asset package for faster load times on subsequent sessions
 
 	return missingFiles
+
+# So in multiplayer, makes the banner the opposite side of you no matter what
+func banner_side():
+	return current_player if singleplayer else 3 - current_player
+
+# Runs when character selected
+func banner_reveal(side, id, data):
+	if not (data.get("border_portrait") is Texture):
+		return
+	var banner = get_node("PortraitBannerHolder/P%d_Banner" % side)
+	var portrait = banner.get_node("PortraitHolder/P%dPortrait" % side)
+	portrait.texture = data.border_portrait
+	portrait.visible = true
+	portrait.set_meta("fighter", id)
+	portrait.material.set_shader_param("extra_replace_color_1", data.get("extra_color_1"))
+	portrait.material.set_shader_param("extra_replace_color_2", data.get("extra_color_2"))
+	var player = side if singleplayer else current_player
+	banner_apply_style(banner_display(player).selected_style, player)
+	banner.get_node("P%d_Player" % side).play("reveal")
+	if singleplayer:
+		var game_portrait = banner_display(side).get_node("%CharacterPortrait")
+		game_portrait.create_tween().tween_property(game_portrait, "modulate:a", 0.0, 0.5)
+
+# Runs when character loaded
+func banner_show(side, id, data):
+	var banner = get_node("PortraitBannerHolder/P%d_Banner" % side)
+	var portrait = banner.get_node("PortraitHolder/P%dPortrait" % side)
+	var anim = banner.get_node("P%d_Player" % side)
+	if not portrait.visible or portrait.get_meta("fighter") != id:
+		banner_reveal(side, id, data)
+		if not portrait.visible:
+			return
+	if anim.is_playing():
+		yield(anim, "animation_finished")
+	if not portrait.visible or portrait.get_meta("fighter") != id:
+		return
+	anim.play("loaded")
+	if data.get("border_portrait_loaded"):
+		portrait.texture = data.border_portrait_loaded
+	if data.get("portrait_load_sound"):
+		var sound = banner.get_node("PortraitHolder/SoundsHolder/P%dloaded" % side)
+		sound.stream = data.portrait_load_sound
+		sound.play()
+
+# hides the banner and shows the base character portrait
+func banner_clear(side):
+	var banner = get_node("PortraitBannerHolder/P%d_Banner" % side)
+	var portrait = banner.get_node("PortraitHolder/P%dPortrait" % side)
+	portrait.visible = false
+	portrait.set_meta("fighter", "")
+	var anim = banner.get_node("P%d_Player" % side)
+	anim.play("RESET")
+	anim.seek(0, true)
+	banner_display(side).get_node("%CharacterPortrait").modulate.a = 1.0
+ 
+func banner_display(player): # grabs which banner depending on the player
+	return get_node("%P1Display" if player == 1 else "%P2Display")
+
+func banner_apply_style(style, player):
+	var side = player if singleplayer else 3 - player
+	var material = get_node("PortraitBannerHolder/P%d_Banner/PortraitHolder/P%dPortrait" % [side, side]).material
+	material.set_shader_param("color", Fighter.P1_COLOR if player == 1 else Fighter.P2_COLOR)
+	material.set_shader_param("use_outline", false)
+	material.set_shader_param("use_extra_color_1", false)
+	material.set_shader_param("use_extra_color_2", false)
+	if style:
+		Custom.apply_style_to_material(style, material, true)
