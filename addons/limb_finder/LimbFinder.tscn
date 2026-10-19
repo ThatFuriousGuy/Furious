@@ -6,7 +6,7 @@
 [node name="LimbFinder" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_min_size = Vector2( 0, 1100 )
+rect_min_size = Vector2( 0, 350 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
@@ -21,20 +21,20 @@ margin_bottom = -6.0
 rect_min_size = Vector2( 0, 200 )
 
 [node name="HeaderRow" type="HBoxContainer" parent="VBox"]
-margin_right = 628.0
+margin_right = 1100.0
 margin_bottom = 14.0
 
 [node name="NodeLabel" type="Label" parent="VBox/HeaderRow"]
 unique_name_in_owner = true
-margin_right = 312.0
+margin_right = 548.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "Select a BaseObj node to edit."
 
 [node name="HintLabel" type="Label" parent="VBox/HeaderRow"]
 unique_name_in_owner = true
-margin_left = 316.0
-margin_right = 628.0
+margin_left = 552.0
+margin_right = 1100.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "click + drag on the sprite to place a limb."
@@ -42,14 +42,14 @@ align = 2
 
 [node name="BodyRow" type="HBoxContainer" parent="VBox"]
 margin_top = 18.0
-margin_right = 628.0
-margin_bottom = 1053.0
+margin_right = 1100.0
+margin_bottom = 330.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="LimbCol" type="VBoxContainer" parent="VBox/BodyRow"]
 margin_right = 180.0
-margin_bottom = 1035.0
+margin_bottom = 312.0
 rect_min_size = Vector2( 180, 0 )
 
 [node name="LimbHeader" type="Label" parent="VBox/BodyRow/LimbCol"]
@@ -61,13 +61,13 @@ text = "Limbs"
 unique_name_in_owner = true
 margin_top = 18.0
 margin_right = 180.0
-margin_bottom = 983.0
+margin_bottom = 260.0
 size_flags_vertical = 3
 
 [node name="AddRow" type="HBoxContainer" parent="VBox/BodyRow/LimbCol"]
-margin_top = 987.0
+margin_top = 264.0
 margin_right = 180.0
-margin_bottom = 1011.0
+margin_bottom = 288.0
 
 [node name="NewLimbEdit" type="LineEdit" parent="VBox/BodyRow/LimbCol/AddRow"]
 unique_name_in_owner = true
@@ -85,20 +85,20 @@ text = "add"
 
 [node name="RemoveLimbButton" type="Button" parent="VBox/BodyRow/LimbCol"]
 unique_name_in_owner = true
-margin_top = 1015.0
+margin_top = 292.0
 margin_right = 180.0
-margin_bottom = 1035.0
+margin_bottom = 312.0
 text = "remove selected"
 
 [node name="LeftSpacer" type="Control" parent="VBox/BodyRow"]
 margin_left = 184.0
 margin_right = 184.0
-margin_bottom = 1035.0
+margin_bottom = 312.0
 
 [node name="SpriteCol" type="VBoxContainer" parent="VBox/BodyRow"]
 margin_left = 188.0
 margin_right = 408.0
-margin_bottom = 1035.0
+margin_bottom = 312.0
 rect_min_size = Vector2( 220, 0 )
 
 [node name="SpriteCountLabel" type="Label" parent="VBox/BodyRow/SpriteCol"]
@@ -131,7 +131,7 @@ text = "- remove"
 [node name="SpriteScroll" type="ScrollContainer" parent="VBox/BodyRow/SpriteCol"]
 margin_top = 42.0
 margin_right = 220.0
-margin_bottom = 1035.0
+margin_bottom = 312.0
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
@@ -146,36 +146,26 @@ columns = 4
 [node name="MidSpacer" type="Control" parent="VBox/BodyRow"]
 margin_left = 412.0
 margin_right = 412.0
-margin_bottom = 1035.0
+margin_bottom = 312.0
 
 [node name="CenterCol" type="VBoxContainer" parent="VBox/BodyRow"]
 margin_left = 416.0
-margin_right = 624.0
-margin_bottom = 1035.0
+margin_right = 1096.0
+margin_bottom = 312.0
 size_flags_horizontal = 3
 
 [node name="SpriteLabel" type="Label" parent="VBox/BodyRow/CenterCol"]
 unique_name_in_owner = true
-margin_right = 208.0
+margin_right = 680.0
 margin_bottom = 14.0
 text = "(no sprite)"
 clip_text = true
 
-[node name="PanelContainer" type="PanelContainer" parent="VBox/BodyRow/CenterCol"]
-margin_top = 18.0
-margin_right = 208.0
-margin_bottom = 989.0
-rect_clip_content = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="SpriteCanvas" type="TextureRect" parent="VBox/BodyRow/CenterCol/PanelContainer"]
+[node name="SpriteCanvas" type="TextureRect" parent="VBox/BodyRow/CenterCol"]
 unique_name_in_owner = true
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 201.0
-margin_bottom = 964.0
-rect_pivot_offset = Vector2( 97, 478.5 )
+margin_top = 18.0
+margin_right = 680.0
+margin_bottom = 266.0
 focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -185,19 +175,19 @@ script = ExtResource( 2 )
 
 [node name="CoordLabel" type="Label" parent="VBox/BodyRow/CenterCol"]
 unique_name_in_owner = true
-margin_top = 993.0
-margin_right = 208.0
-margin_bottom = 1007.0
+margin_top = 270.0
+margin_right = 680.0
+margin_bottom = 284.0
 clip_text = true
 
 [node name="ButtonRow" type="HBoxContainer" parent="VBox/BodyRow/CenterCol"]
-margin_top = 1011.0
-margin_right = 208.0
-margin_bottom = 1035.0
+margin_top = 288.0
+margin_right = 680.0
+margin_bottom = 312.0
 
 [node name="FlippedCheck" type="CheckBox" parent="VBox/BodyRow/CenterCol/ButtonRow"]
 unique_name_in_owner = true
-margin_right = 28.0
+margin_right = 72.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "flipped"
@@ -205,8 +195,8 @@ clip_text = true
 
 [node name="AbsentCheck" type="CheckBox" parent="VBox/BodyRow/CenterCol/ButtonRow"]
 unique_name_in_owner = true
-margin_left = 32.0
-margin_right = 60.0
+margin_left = 76.0
+margin_right = 242.0
 margin_bottom = 24.0
 hint_tooltip = "Mark this limb as absent on this sprite."
 size_flags_horizontal = 3
@@ -214,15 +204,15 @@ text = "no limb on this sprite"
 clip_text = true
 
 [node name="Spacer" type="Control" parent="VBox/BodyRow/CenterCol/ButtonRow"]
-margin_left = 64.0
-margin_right = 84.0
+margin_left = 246.0
+margin_right = 246.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
 [node name="CopyLimbButton" type="Button" parent="VBox/BodyRow/CenterCol/ButtonRow"]
 unique_name_in_owner = true
-margin_left = 88.0
-margin_right = 109.0
+margin_left = 250.0
+margin_right = 325.0
 margin_bottom = 24.0
 hint_tooltip = "Copy the active limb's entry on the active sprite."
 size_flags_horizontal = 3
@@ -231,8 +221,8 @@ clip_text = true
 
 [node name="PasteLimbButton" type="Button" parent="VBox/BodyRow/CenterCol/ButtonRow"]
 unique_name_in_owner = true
-margin_left = 113.0
-margin_right = 133.0
+margin_left = 329.0
+margin_right = 409.0
 margin_bottom = 24.0
 hint_tooltip = "Paste the clipboard's limb entry onto the active limb / sprite."
 size_flags_horizontal = 3
@@ -241,8 +231,8 @@ clip_text = true
 
 [node name="CopyAllButton" type="Button" parent="VBox/BodyRow/CenterCol/ButtonRow"]
 unique_name_in_owner = true
-margin_left = 137.0
-margin_right = 158.0
+margin_left = 413.0
+margin_right = 474.0
 margin_bottom = 24.0
 hint_tooltip = "Copy every limb's entry on the active sprite."
 size_flags_horizontal = 3
@@ -251,8 +241,8 @@ clip_text = true
 
 [node name="PasteAllButton" type="Button" parent="VBox/BodyRow/CenterCol/ButtonRow"]
 unique_name_in_owner = true
-margin_left = 162.0
-margin_right = 183.0
+margin_left = 478.0
+margin_right = 544.0
 margin_bottom = 24.0
 hint_tooltip = "Paste every clipboard entry onto the active sprite (overwrites)."
 size_flags_horizontal = 3
@@ -261,30 +251,30 @@ clip_text = true
 
 [node name="ClearButton" type="Button" parent="VBox/BodyRow/CenterCol/ButtonRow"]
 unique_name_in_owner = true
-margin_left = 187.0
-margin_right = 208.0
+margin_left = 548.0
+margin_right = 680.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "clear on this sprite"
 clip_text = true
 
 [node name="RightSpacer" type="Control" parent="VBox/BodyRow"]
-margin_left = 628.0
-margin_right = 628.0
-margin_bottom = 1035.0
+margin_left = 1100.0
+margin_right = 1100.0
+margin_bottom = 312.0
 
 [node name="HotkeysRow" type="HBoxContainer" parent="VBox"]
-margin_top = 1057.0
-margin_right = 628.0
-margin_bottom = 1088.0
+margin_top = 334.0
+margin_right = 1100.0
+margin_bottom = 348.0
 
 [node name="HotkeysLabel" type="Label" parent="VBox/HotkeysRow"]
-unique_name_in_owner = true
-margin_right = 628.0
-margin_bottom = 31.0
+margin_right = 1100.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
-text = "Hotkeys:  Space — next sprite  |  V — paste limb from prev sprite  |  Shift+V — paste all from prev sprite  |  ← ↑ ↓ → — nudge limb 1 px  |  Middle Click — pan image |  Current Zoom: 1.0x"
+text = "Hotkeys:  Space — next sprite  |  V — paste limb from prev sprite  |  Shift+V — paste all from prev sprite  |  ← ↑ ↓ → — nudge limb 1 px"
 autowrap = true
+clip_text = true
 
 [node name="AddSpriteDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
