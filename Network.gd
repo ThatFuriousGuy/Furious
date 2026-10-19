@@ -1166,7 +1166,7 @@ remotesync func send_rematch_request(player_id):
 				SteamLobby.REMATCHING_ID = SteamLobby.OPPONENT_ID
 #				Global.reload()
 #				begin_game()
-				SteamLobby.exit_match_from_button()
+				SteamLobby.call_deferred("exit_match_from_button")
 			else:
 				begin_game()
 
