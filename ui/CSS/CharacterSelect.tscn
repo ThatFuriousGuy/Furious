@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://ui/CSS/CharacterSelect.gd" type="Script" id=1]
 [ext_resource path="res://theme.tres" type="Theme" id=2]
@@ -244,6 +244,129 @@ tracks/5/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("BGHolder/BG1:color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.152941, 0.133333, 0.290196, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("BGHolder/BG3:color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.67451, 0.635294, 1, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("BGHolder:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "failed"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PortraitHolder/P1Portrait:material:shader_param/whiteness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PortraitHolder/P1Portrait:material:shader_param/blackness")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.0791034, 0.138778, 0.245637, 0.755751 ),
+"transitions": PoolRealArray( 1, 1, 1, 0.297302, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0, 1.0, 0.0, 0.725 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PortraitHolder/P1Portrait:material:shader_param/greyscale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PortraitHolder/P1Portrait:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.316414, 0.777156 ),
+"transitions": PoolRealArray( 1, 0.297302, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 3, -3 ), Vector2( -2, 5 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("BGHolder/BG1:color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.0791034 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.152941, 0.133333, 0.290196, 1 ), Color( 0.294118, 0.294118, 0.294118, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("BGHolder/BG3:color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.0777156, 0.759115 ),
+"transitions": PoolRealArray( 1, 2.07053, 1 ),
+"update": 0,
+"values": [ Color( 0.67451, 0.635294, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.713726, 0.713726, 0.713726, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("BGHolder:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.595357 ),
+"transitions": PoolRealArray( 3.13834, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -3, 2 ) ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "loaded"
@@ -382,6 +505,42 @@ tracks/5/keys = {
 "update": 0,
 "values": [ 1.0 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("BGHolder/BG1:color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.152941, 0.133333, 0.290196, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("BGHolder/BG3:color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.67451, 0.635294, 1, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("BGHolder:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="Shader" id=17]
 code = "shader_type canvas_item;
@@ -501,7 +660,7 @@ shader_param/outline_color = Color( 0, 0, 0, 1 )
 shader_param/max_color_distance = 0.01
 shader_param/whiteness = 0.0
 shader_param/blackness = 0.0
-shader_param/greyscale = 1.0
+shader_param/greyscale = 0.0
 
 [sub_resource type="Animation" id=6]
 length = 0.001
@@ -575,7 +734,130 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
+"values": [ 0.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("BGHolder/BG1:color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.294118, 0.0823529, 0.0901961, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("BGHolder/BG3:color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0.478431, 0.505882, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("BGHolder:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "failed"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PortraitHolder/P2Portrait:material:shader_param/whiteness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PortraitHolder/P2Portrait:material:shader_param/blackness")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.0791034, 0.138778, 0.245637, 0.755751 ),
+"transitions": PoolRealArray( 1, 1, 1, 0.297302, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0, 1.0, 0.0, 0.725 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PortraitHolder/P2Portrait:material:shader_param/greyscale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
 "values": [ 1.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PortraitHolder/P2Portrait:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.316414, 0.777156 ),
+"transitions": PoolRealArray( 1, 0.297302, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 3, -3 ), Vector2( -2, 5 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("BGHolder/BG1:color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.0791034 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.294118, 0.0823529, 0.0901961, 1 ), Color( 0.294118, 0.294118, 0.294118, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("BGHolder/BG3:color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.0777156, 0.759115 ),
+"transitions": PoolRealArray( 1, 2.07053, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.478431, 0.505882, 1 ), Color( 1, 1, 1, 1 ), Color( 0.713726, 0.713726, 0.713726, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("BGHolder:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.595357 ),
+"transitions": PoolRealArray( 3.13834, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -3, 2 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -715,6 +997,42 @@ tracks/5/keys = {
 "update": 0,
 "values": [ 1.0 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("BGHolder/BG1:color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.294118, 0.0823529, 0.0901961, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("BGHolder/BG3:color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0.478431, 0.505882, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("BGHolder:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [node name="CharacterSelect" type="Panel"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -771,6 +1089,7 @@ texture = ExtResource( 29 )
 
 [node name="P1_Player" type="AnimationPlayer" parent="PortraitBannerHolder/P1_Banner"]
 anims/RESET = SubResource( 3 )
+anims/failed = SubResource( 19 )
 anims/loaded = SubResource( 4 )
 anims/reveal = SubResource( 5 )
 
@@ -816,6 +1135,7 @@ texture = ExtResource( 11 )
 
 [node name="P2_Player" type="AnimationPlayer" parent="PortraitBannerHolder/P2_Banner"]
 anims/RESET = SubResource( 6 )
+anims/failed = SubResource( 20 )
 anims/loaded = SubResource( 7 )
 anims/reveal = SubResource( 8 )
 

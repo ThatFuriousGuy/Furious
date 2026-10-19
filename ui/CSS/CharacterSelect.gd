@@ -397,7 +397,7 @@ func _on_button_pressed(button):
 		var data = get_display_data(button)
 		var path = charBorderPortrait.get(button.name, "")
 		if path != "" and not data.get("border_portrait"):
-			data["border_portrait"] = load(path) if ResourceLoader.exists(path) else textureGet(path)
+			data["border_portrait"] = banner_texture(path)
 		banner_reveal(banner_side(), button.name, data)
 		loadThread = Thread.new()
 		loadThread.start(self, "async_loadButtonChar", button)
@@ -732,7 +732,7 @@ func async_loadButtonChar(button):
 	if (miss == []):
 		buffer_select(button)
 	else:
-		call_deferred("banner_clear", banner_side())
+		call_deferred("banner_failed", banner_side(), button.name)
 	loadingText = getCharName(button.name) + " Loaded"
 	loadingLabel_vanish()
 	currentlyLoading = false
@@ -1396,6 +1396,7 @@ func banner_reveal(side, id, data):
 	banner_apply_style(banner_display(player).selected_style, player)
 	banner.get_node("P%d_Player" % side).play("reveal")
 	if singleplayer:
+		# how fast the base game portrait goes invisible when selected
 		var game_portrait = banner_display(side).get_node("%CharacterPortrait")
 		game_portrait.create_tween().tween_property(game_portrait, "modulate:a", 0.0, 0.5)
 
@@ -1420,7 +1421,18 @@ func banner_show(side, id, data):
 		sound.stream = data.portrait_load_sound
 		sound.play()
 
-# hides the banner and shows the base character portrait
+# Runs if the character could not load due to null or missing files
+func banner_failed(side, id):
+	var banner = get_node("PortraitBannerHolder/P%d_Banner" % side)
+	var portrait = banner.get_node("PortraitHolder/P%dPortrait" % side)
+	var anim = banner.get_node("P%d_Player" % side)
+	if anim.is_playing():
+		yield(anim, "animation_finished")
+	# Stop if the banner was removed or changed during the reveal
+	if portrait.visible and portrait.get_meta("fighter") == id:
+		anim.play("failed")
+
+# hides the banner back to starting position and shows the base character portrait
 func banner_clear(side):
 	var banner = get_node("PortraitBannerHolder/P%d_Banner" % side)
 	var portrait = banner.get_node("PortraitHolder/P%dPortrait" % side)
@@ -1443,3 +1455,34 @@ func banner_apply_style(style, player):
 	material.set_shader_param("use_extra_color_2", false)
 	if style:
 		Custom.apply_style_to_material(style, material, true)
+
+# returns a valid animated texture, or regular png of their banner portrait
+# if its an animated texture built in, it makes one here for it to use for the banner
+# will not show a loading banner if it can't find any or fails to load
+func banner_texture(path):
+	if path.get_extension() != "tres":
+		return textureGet(path)
+	var f = File.new()
+	if f.open(path, File.READ) != OK:
+		return 0
+	var lines = f.get_as_text().split("\n")
+	f.close()
+	if not "AnimatedTexture" in lines[0]:
+		return load(path)
+		# returns a regular png
+	var texture = AnimatedTexture.new()
+	var images = {}
+	for line in lines:
+		line = line.strip_edges()
+		if line.begins_with("[ext_resource"):
+			var id = line.split(" id=")[1].trim_suffix("]")
+			var image_path = line.split("path=\"")[1].split("\"")[0]
+			images["ExtResource( %s )" % id] = textureGet(image_path)
+		# looks for settings like fps or the image for that frame
+		elif " = " in line:
+			var parts = line.split(" = ")
+			var value = images[parts[1]] if parts[1] in images else str2var(parts[1])
+			texture.set(parts[0], value)
+	# returning 0 meaning don't show the loading banner, it will still show up
+	# once fully loaded since the mod will be loaded
+	return texture if texture.get_frame_texture(0) else 0
