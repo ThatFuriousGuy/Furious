@@ -5,6 +5,7 @@ var buttons = []
 signal match_ready(data)
 signal opened()
 signal mods_loaded()
+signal char_loading(char_button)
 
 var pressed_button = null
 var hovered_characters = {}
@@ -498,6 +499,8 @@ func _on_button_pressed(button):
 		button.set_pressed_no_signal(false)
 		return
 	#var miss = []
+	emit_signal("char_loading", button)
+	$SelectionArt.use_banner(current_player, get_fighter_path(button))
 	$SelectionArt.animate_reveal(current_player)
 	$SelectionArt.animate_load_started(current_player)
 	$SelectionArt.set_portrait(current_player, null)
@@ -1742,3 +1745,15 @@ func _createImportFiles(folder, _charName, _charPath): # returns an array of mis
 		charPackages[modName] = cache_path
 
 	return missingFiles
+
+# Modders: call this in your CharacterSelect script to give your fighter its own banner scene
+# your scene shows when your fighter is picked and is flipped for P2 automatically
+# most functions will be called on your scene if they exist instead of the default ones
+func set_custom_banner(fighter_path, banner_path):
+	$SelectionArt.set_custom_banner(fighter_path, banner_path)
+
+# the fighter's scene path, empty for vanilla characters
+func get_fighter_path(button):
+	if button.name in name_to_index:
+		return charList[name_to_index[button.name]][1]
+	return ""
