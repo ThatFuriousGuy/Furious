@@ -11,7 +11,7 @@ onready var sfx_nodes = {
 	2: [$"%RightSFX1", $"%RightSFX2"],
 }
 
-# currently unused, planned for use
+# shows each player banner on the opposite side from them, for multiplayer
 var swap_sides = false
 
 # banner scene paths where the fighter paths are the key
@@ -25,7 +25,9 @@ func _ready():
 			node.get_node("Timer").connect("timeout", node, "play")
 	reset()
 
-
+# the side a player's art shows on
+func get_side(player_id):
+	return 3 - player_id if swap_sides else player_id
 
 func reset():
 	use_banner(1, "")

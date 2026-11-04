@@ -171,7 +171,7 @@ func _ready():
 
 
 func _on_style_selected(style, player_id):
-	$SelectionArt.apply_style(player_id, style)
+	$SelectionArt.apply_style($SelectionArt.get_side(player_id), style)
 
 
 
@@ -361,7 +361,7 @@ func init(singleplayer=true):
 	}
 	
 	current_player = 1 if singleplayer else Network.player_id
-	
+	$SelectionArt.swap_sides = not singleplayer
 	if !singleplayer:
 		if current_player == 1:
 			$"%P2Display".set_enabled(false)
@@ -500,11 +500,12 @@ func _on_button_pressed(button):
 		return
 	#var miss = []
 	emit_signal("char_loading", button)
-	$SelectionArt.use_banner(current_player, get_fighter_path(button))
-	$SelectionArt.animate_reveal(current_player)
-	$SelectionArt.animate_load_started(current_player)
-	$SelectionArt.set_portrait(current_player, null)
-	$SelectionArt.set_background(current_player, null)
+	var side = $SelectionArt.get_side(current_player)
+	$SelectionArt.use_banner(side, get_fighter_path(button))
+	$SelectionArt.animate_reveal(side)
+	$SelectionArt.animate_load_started(side)
+	$SelectionArt.set_portrait(side, null)
+	$SelectionArt.set_background(side, null)
 
 	if (isCustomChar(button.name)):
 		loadThread = Thread.new()
@@ -1003,11 +1004,12 @@ func buffer_select(button):
 	portrait_data["use_extra_color_2"] = display_data.get("use_extra_color_2", false)
 	portrait_data["extra_color_2"] = display_data.get("extra_color_2", Color.magenta)
 	
-	$SelectionArt.animate_load_done(current_player)
-	$SelectionArt.set_portrait(current_player, portrait_data["border_portrait"])
-	$SelectionArt.set_background(current_player, portrait_data["border_background"])
-	$SelectionArt.set_sfx_data(current_player, portrait_data["select_sfx"])
-	$SelectionArt.set_style_params(current_player, portrait_data)
+	var side = $SelectionArt.get_side(current_player)
+	$SelectionArt.animate_load_done(side)
+	$SelectionArt.set_portrait(side, portrait_data["border_portrait"])
+	$SelectionArt.set_background(side, portrait_data["border_background"])
+	$SelectionArt.set_sfx_data(side, portrait_data["select_sfx"])
+	$SelectionArt.set_style_params(side, portrait_data)
 	
 	if singleplayer and current_player == 1:
 		current_player = 2
